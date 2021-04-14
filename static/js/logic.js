@@ -14,8 +14,24 @@ var myMap = L.map("map", {
   // Store the API query variables.
   // For docs, refer to https://dev.socrata.com/docs/queries/where.html.
   // And, refer to https://dev.socrata.com/foundry/data.cityofnewyork.us/erm2-nwe9.
-  var baseURL = "https://data.cityofnewyork.us/resource/fhrw-4uyv.json?";
-  var date = "$where=created_date between'2016-01-01T00:00:00' and '2017-01-01T00:00:00'";
-  var complaint = "&complaint_type=Rodent";
-  var limit = "&$limit=10000";
-  
+  var baseURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
+
+// Import & Visualize the Data
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// Create a map using Leaflet that plots all of the earthquakes from your data set based on their longitude and latitude.
+
+
+// Your data markers should reflect the magnitude of the earthquake by their size and and depth of the earthquake by color. Earthquakes with higher magnitudes should appear larger and earthquakes with greater depth should appear darker in color.
+
+
+// HINT: The depth of the earth can be found as the third coordinate for each earthquake.
+
+
+// Include popups that provide additional information about the earthquake when a marker is clicked.
+
+
+// Create a legend that will provide context for your map data.
+
+
+// Your visualization should look something like the map above.
