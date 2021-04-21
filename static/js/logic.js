@@ -4,7 +4,7 @@
 // Create the map object
 var myMap = L.map("map", {
   center: [28.304381, -196.526448],
-  zoom: 2
+  zoom: 2.5
 });
 
 // Adding the tile layer for Open Street Map
@@ -18,22 +18,30 @@ var baseURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day
 // Import & Visualize the Data
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+// Create a function for the radius of markers related to magnitude
 function calculateRadius (magnitude) {
   return magnitude * 3
 }
 
+// Create a function for coloring the markers according to depth
 function colorMarker (depth) {
-  if (depth < 10) {
-    return "#72fa41"
+  if (depth > 90 ) {
+    return "#ea2c2c"
   }
-  if (depth < 30) {
-    return "	#FFA500"
+  if (depth > 70) {
+    return "	#ea822c"
   }
-  if (depth < 50) {
-    return "	#FF4500"
+  if (depth > 50) {
+    return "	#ee9c00"
+  }
+  if (depth > 30) {
+    return "	#eecc00"
+  }
+  if (depth > 10) {
+    return "	#d4ee00"
   }
   else {
-    return "#000000"
+    return "#98ee00"
   }
 }
 // 
@@ -51,6 +59,7 @@ d3.json(baseURL).then(function (data) {
       layer.bindPopup(
         "Magnitude: " + feature.properties.mag + "Depth: " + feature.geometry.coordinates[2] + " Location: " + feature.properties.place
       )
+      // style: 
     },
     
     // Style markers
@@ -59,7 +68,6 @@ d3.json(baseURL).then(function (data) {
         radius: calculateRadius(feature.properties.mag),
         opacity: 0,
         fillOpacity: .75, 
-        // fillColor: 
         color: colorMarker(feature.geometry.coordinates[2])
       }
     }
@@ -95,62 +103,6 @@ legend.onAdd = function() {
 // We add our legend to the map.
 legend.addTo(myMap);
 
-// "<br> Capacity: " + station.capacity + "<br>"
-// function to return the color based on magnitude
-// function markerColor(magnitude) {
-//   if (magnitude > 4) {
-//     return 'red'
-//   } else if (magnitude > 3) {
-//     return 'orange'
-//   } else if (magnitude > 2) {
-//     return 'yellow'
-//   } else {
-//     return 'green'
-//   }
-// }
-
-// // function for opacity based on magnitude
-// function markerOpacity(magnitude) {
-//   if (magnitude > 6) {
-//     return .99
-//   } else if (magnitude > 5) {
-//     return .80
-//   } else if (magnitude > 4) {
-//     return .70
-//   } else if (magnitude > 3) {
-//     return .60
-//   } else if (magnitude > 2) {
-//     return .50
-//   } else if (magnitude > 1) {
-//     return .40
-//   } else {
-//     return .30
-//   }
-// }
-
-// // add legend to map
-// legend.onAdd = function () {
-
-//   var div = L.DomUtil.create('div', 'info legend')
-
-//   div.innerHTML = "<h3>Magnitude Legend</h3><table><tr><th>>= 4</th><td>Red</td></tr><tr><th>>= 3</th><td>Orange</td></tr><tr><th>>= 2</th><td>Yellow</td></tr><tr><th>< 2</th><td>Green</td></tr></table>";
-
-//   return div;
-// };
-
-
-// d3.json(baseURL, function(data) {
-//   console.log(data)
-//   createImageBitmap(data.features)
-//   // console.log(magnitude)
-// });
-
-
-// Store the API query variables.
-// var quake_features = data.features
-// var magnitude = '$where=magnitude
-// var depth = data.geometry.coordinates[2]
-// console.log(depth)
 
 
 // For docs, refer to https://dev.socrata.com/docs/queries/where.html.
