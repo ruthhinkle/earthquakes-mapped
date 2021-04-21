@@ -1,5 +1,5 @@
 // IMPORT DATA & SET-UP MAP
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // Create the map object
 var myMap = L.map("map", {
@@ -15,8 +15,8 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // Definite URL variable of geoJSON link
 var baseURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson?";
 
-// Import & Visualize the Data
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// CREATE FUNCTIONS TO CALL LATER
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 // Create a function for the radius of markers related to magnitude
 function calculateRadius (magnitude) {
@@ -44,10 +44,12 @@ function colorMarker (depth) {
     return "#98ee00"
   }
 }
-// 
+
+// IMPORT & VISUALIZE DATA
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// Call in the data and visualize on map
 d3.json(baseURL).then(function (data) {
-  // earthquake = data.features
-  // console.log(earthquake[0].geometry.coordinates)
   L.geoJSON(data, {
     pointToLayer: function (feature, latLng) {
       return L.circleMarker(latLng)
@@ -56,10 +58,7 @@ d3.json(baseURL).then(function (data) {
 
     //Bind Popups to each feature
     onEachFeature: function (feature, layer) {
-      layer.bindPopup(
-        "Magnitude: " + feature.properties.mag + "Depth: " + feature.geometry.coordinates[2] + " Location: " + feature.properties.place
-      )
-      // style: 
+      layer.bindPopup("<h3>Location: " + feature.properties.place + "</h3><hr><p>Magnitude: " + feature.properties.mag +  "</p><p>Depth: " + feature.geometry.coordinates[2] );
     },
     
     // Style markers
@@ -76,7 +75,11 @@ d3.json(baseURL).then(function (data) {
 
 })
 
-// Here we create a legend control object.
+// CREATE THE LEGEND
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+// Create a legend control object.
+// Completed this code with assistance from my tutor, Ryan.
 var legend = L.control({
   position: "bottomright"
 });
@@ -102,26 +105,3 @@ legend.onAdd = function() {
 };
 // We add our legend to the map.
 legend.addTo(myMap);
-
-
-
-// For docs, refer to https://dev.socrata.com/docs/queries/where.html.
-// And, refer to https://dev.socrata.com/foundry/data.cityofnewyork.us/erm2-nwe9.
-
-
-// Create a map using Leaflet that plots all of the earthquakes from your data set based on their longitude and latitude.
-
-
-// Your data markers should reflect the magnitude of the earthquake by their size and and depth of the earthquake by color. Earthquakes with higher magnitudes should appear larger and earthquakes with greater depth should appear darker in color.
-
-
-// HINT: The depth of the earth can be found as the third coordinate for each earthquake.
-
-
-// Include popups that provide additional information about the earthquake when a marker is clicked.
-
-
-// Create a legend that will provide context for your map data.
-
-
-// Your visualization should look something like the map above.
